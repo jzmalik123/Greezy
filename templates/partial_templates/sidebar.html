@@ -1,0 +1,54 @@
+<div class="sidebar_navigation">
+  <div class="sidebar_exit_btn"><a href="#"><i class="fal fa-arrow-from-right"></i></a></div>
+  <div class="sidebar_account_section">
+    <a><img src="{{ url_for('static', filename='images/user.svg') }}"></a>
+    <div class="sidebar_account_detail">
+      <h6>Joe</h6>
+      <small>user</small>
+    </div>
+  </div>
+
+
+  <div class="sidebar_menu_list">
+    <div class="sidebar_menu_list_items dashboard active">
+      <img src="{{ url_for('static', filename='images/dashboard_icon.svg') }}">
+      <span>Dashboard</span>
+    </div>
+
+    <div class="sidebar_menu_list_items profile">
+      <i class="fal fa-user"></i>
+      <span>Profile</span>
+    </div>
+
+    <div class="sidebar_menu_list_items connect_greezy">
+      <img src="{{ url_for('static', filename='images/connect.svg') }}">
+      <span>Connect Greezy</span>
+    </div>
+
+    <div class="sidebar_menu_list_items strategy">
+      <img src="{{ url_for('static', filename='images/event.svg') }}">
+      <span>Strategy</span>
+    </div>
+
+    <div class="sidebar_menu_list_items affiliation">
+      <i class="fal fa-share-alt"></i>
+      <span>Affiliation</span>
+    </div>
+
+    <div class="sidebar_menu_list_items telegram">
+      <i class="fab fa-telegram-plane"></i>
+      <span>Telegram</span>
+    </div>
+
+    <div class="sidebar_menu_list_items website">
+      <img src="{{ url_for('static', filename='images/website.svg') }}">
+      <span>Website</span>
+    </div>
+
+    <div class="sidebar_menu_list_items support">
+      <i class="far fa-question-circle"></i>
+      <span>Support</span>
+    </div>
+
+  </div>
+</div>

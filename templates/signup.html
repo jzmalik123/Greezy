@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  {% include 'partial_templates/head.html' %}
+  <body>
+    <section class="login_section">
+      <div class="orange_filter"></div>
+      <div class="blue_filter"></div>
+      <div class="top_blue_filter"></div>
+      <div class="top_right_blue_filter"></div>
+
+        <div class="login_container">
+          {% include 'partial_templates/flash_messages.html' %}
+        
+        <div class="site_logo"><a><img src="{{ url_for('static', filename = 'images/logo.png') }}"></a></div>
+         <div class="login_form_section">
+          <div class="login_form">  
+           <div class="login_form_heading">
+            <h3>Sign up now</h3>
+            <small>You can create an investor account below.</small>
+            </div>
+             <form autocomplete="off" method="post" data-parsley-validate>
+               <div class="login_form_parent">
+                <div class="login_fields">
+                  <div class="login_input_field">
+                    <span>
+                      <i class="fal fa-lock-alt"></i>
+                     <input type="text" name="registration_code" placeholder="Registration code">
+                    </span> 
+                    </div>
+                    <div class="login_input_field">
+                      <span>
+                        <i class="fal fa-user"></i>
+                       <input type="text" name="username" placeholder="Username" data-parsley-required="true" data-parsley-minlength="6">
+                      </span> 
+                    </div>
+                    <div class="login_input_field">
+                      <span>
+                        <i class="fal fa-envelope"></i>
+                        <input type="email" name="email" placeholder="Email" data-parsley-required="true" data-parsley-type="email">
+                      </span>
+                    </div>
+                    <div class="login_input_field">
+                      <span>
+                        <i class="fal fa-phone-alt"></i>
+                        <input type="number" name="phone" placeholder="Phone" data-parsley-required="true">
+                      </span>
+                    </div>
+
+                     <div class="login_input_field">
+                       <span>
+                         <i class="fal fa-key"></i>
+                          <input type="password" id="password" name="password" placeholder="Password" data-parsley-required="true" data-parsley-minlength="6">
+                       </span>
+                     </div>
+                     <div class="login_input_field">
+                        <span>
+                          <i class="fal fa-key"></i>
+                          <input type="password" id="confirm-password" name="confirm-password" data-parsley-equalto="#password"	data-parsley-minlength="6" data-parsley-required="true" placeholder="Confirm your password">
+                        </span>
+                     </div>
+                 </div>
+                 <div class="submit_btn">
+                 <button type="submit">Sign up</button>
+                 </div>
+                </div> 
+             </form>
+        </div>   
+         </div>
+
+         <div class="other_login_data_section">
+           <div class="other_login_data"><small>Forgot password ? </small><a href="#"> Reset here</a></div>
+           <div class="other_login_data"><small>I have an account ?</small><a href="/login"> Login </a></div>
+         </div>
+        
+       </div>
+   </section>
+</body>
+</html>
