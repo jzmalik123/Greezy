@@ -144,6 +144,28 @@ def logout():
     return redirect("/")
 
 
+@app.route('/profile', methods=['GET', 'POST'])
+def profile():
+    redirectIfSessionNotExists()
+    current_user = User.query.filter_by(id=session['user_id']).first()
+    if request.method == 'POST':
+        current_user.first_name = request.form['first_name']
+        current_user.last_name = request.form['last_name']
+        current_user.email = request.form['email']
+        current_user.phone = request.form['phone']
+        current_user.street_address = request.form['street_address']
+        current_user.zip_code = request.form['zip_code']
+        current_user.city = request.form['city']
+        current_user.cryptocurrency = request.form['cryptocurrency']
+        current_user.wallet = request.form['wallet']
+        try:
+            db.session.commit()
+            flash("Profile updated successfully", "success")
+        except:
+            flash("Error in updating profile", "danger")
+    return render_template('profile.html', cssFile="dashboard", current_user=current_user, pageTitle="Profile")
+
+
 @app.context_processor
 def context_processor():
     return dict(logoURL=url_for('static', filename='images/logo.png'))
