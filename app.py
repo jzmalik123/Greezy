@@ -167,6 +167,22 @@ def profile():
     return render_template('profile.html', cssFile="dashboard", current_user=current_user, pageTitle="Profile")
 
 
+@app.route('/connect_greezy', methods=['GET', 'POST'])
+def connect_greezy():
+    redirectIfSessionNotExists()
+    current_user = User.query.filter_by(id=session['user_id']).first()
+    if request.method == 'POST':
+        current_user.cb_credentials.cb_key = request.form['cb_key']
+        current_user.cb_credentials.cb_password = request.form['cb_password']
+        current_user.cb_credentials.cb_secret = request.form['cb_secret']
+        try:
+            db.session.commit()
+            flash("Coinbase Credentials updated successfully", "success")
+        except:
+            flash("Error in updating Coinbase Credentials", "danger")
+    return render_template('connect_greezy.html', cssFile="dashboard", current_user=current_user, pageTitle="Connect Greezy")
+
+
 @app.context_processor
 def context_processor():
     return dict(logoURL=url_for('static', filename='images/logo.png'))

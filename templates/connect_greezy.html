@@ -1,48 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
-    <link rel="stylesheet" type="text/css" href="css/dashboard.css">
-
-
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
-
-
-<!-- fontawsome link start-->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
-    <!-- fontawsome link end -->
-
- 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-<!-- bootstrap link start -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
-<!-- bootstrap link end -->
-
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
-
-
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
-
-</head>
-<body>
-
-<style>
+  {% include 'partial_templates/head.html' %}
+  <style>
 .profile_page_form_section{
   display: block;
   float: left;
@@ -62,7 +21,7 @@
   display: flex;
     flex-direction: column;
     width: 100%;
-    gap: 25px 0px; 
+    gap: 25px 0px;
 }
 .profile_form_data_box_heading h6{
   font-style: normal;
@@ -79,7 +38,7 @@
   display: flex;
     flex-direction: column;
     width: 100%;
-    gap: 40px 0px; 
+    gap: 40px 0px;
 }
 .profile_form_data_inner_box{
   width: 100%;
@@ -93,7 +52,7 @@
   display: flex;
     flex-direction: column;
     width: 100%;
-    gap: 20px 0px; 
+    gap: 20px 0px;
 }
 
 .profile_form_data_box_docment{
@@ -179,7 +138,7 @@ margin: 0px;
 
   display: flex;
   height: 100%;
-  align-items: center;  
+  align-items: center;
   position: absolute;
   top: 0px;
   left: 10px;
@@ -242,205 +201,55 @@ color: #ECE7E2;
 
 
 </style>
-
-
-<div class="sidebar_navigation">
-  <div class="sidebar_exit_btn"><a href="#"><i class="fal fa-arrow-from-right"></i></a></div>
-  <div class="sidebar_account_section">
-    <a><img src="image/user.svg"></a>
-   <div class="sidebar_account_detail">
-    <h6>Joe</h6>
-    <small>user</small>
-    </div> 
-  </div>
-
-
-  <div class="sidebar_menu_list">
-    <div class="sidebar_menu_list_items dashboard active">
-      <img src="image/dashboard_icon.svg">
-      <span>Dashboard</span>
-    </div>
-    <div class="sidebar_menu_list_items profile">
-      <i class="fal fa-user"></i>
-      <span>Profile</span>
-    </div>
-    <div class="sidebar_menu_list_items connect_greezy">
-     <img src="image/connect.svg">
-      <span>Connect Greezy</span>
-    </div>
-    <div class="sidebar_menu_list_items strategy">
-     <img src="image/event.svg">
-      <span>Strategy</span>
-    </div>
-    <div class="sidebar_menu_list_items affiliation">
-      <i class="fal fa-share-alt"></i>
-      <span>Affiliation</span>
-    </div>
-    <div class="sidebar_menu_list_items telegram">
-      <i class="fab fa-telegram-plane"></i>
-      <span>Telegram</span>
-    </div>
-    <div class="sidebar_menu_list_items website">
-     <img src="image/website.svg">
-      <span>Website</span>
-    </div>
-    <div class="sidebar_menu_list_items support">
-      <i class="far fa-question-circle"></i>
-      <span>Support</span>
-    </div>
-  </div>
-
-</div>
-
-
-
-
-
-
-<div class="body_main">
-    <!-- header start -->
-
-<div class="responsive_nav_bar">
-  <div class="custom_container">
-   <div class="responsive_nav_bar_main">
-    <a class="hamburger_btn"><img src="image/hamburger.svg"> </a>
-    <div class="dashboard_company_logo"> <img src="image/logo.png" /></div>
-   </div> 
-  </div>
-</div>
-
-
-<div class="dashboard_header">
-    <div class="custom_container">
-   <div class="dashboard_title">
-       <div class="dashboard_welcome_text">
-         <h2>Step 1 - Connect Greezy to your Coinbase account</h2>
-         <p>Once logged in, you will be redirected to the "Strategy" tab to choose the one that suits you.</p>
+  <body>
+    {% include 'partial_templates/sidebar.html' %}
+    <div class="body_main">
+      {% include 'partial_templates/top_nav.html' %}
+      <div class="dashboard_header">
+        <div class="custom_container">
+           <div class="dashboard_title">
+               <div class="dashboard_welcome_text">
+                 <h2>Step 1 - Connect Greezy to your Coinbase account</h2>
+                 <p>Once logged in, you will be redirected to the "Strategy" tab to choose the one that suits you.</p>
+               </div>
+               <div class="dashboard_logo"><img src="{{ url_for('static', filename='images/logo.png') }}"></div>
+           </div>
         </div>
-       <div class="dashboard_logo"><img src="image/logo.png"></div>
-   </div>
-</div>
-
-</div>
-
- <!-- header end  -->
-
-
-
-<!-- profile start -->
-<div class="profile_page_form_section">
-  <div class="custom_container_two">
-  <form method="POST">
-
-    <div class="profile_form_data_section">
-    
-      <div class="profile_form_data_box">
-        <div class="profile_form_data_single_box_three">
-          <div class="profile_form_data_single_box_two">
-            <div class="profile_form_form_fields">
-              <span>Key</span>
-              <input type="text" placeholder="Key" name="name">
-            </div>
-          </div>
-
-          <div class="profile_form_data_single_box_two">
-            <div class="profile_form_form_fields">
-              <span>Secret </span>
-              <input type="text" placeholder="Secret" name="name">
-            </div>
-          </div>
-
-          <div class="profile_form_data_single_box_two">
-            <div class="profile_form_form_fields">
-              <span>Password</span>
-              <input type="text" placeholder="Password" name="name">
-            </div>
-          </div>
-
-        </div>
-
-
-        
       </div>
-    
-
-<div class="profile_submit_btn">
-  <button><i class="fal fa-check-circle"></i><span>Connect Greezy</span></button>
-</div>
-
+      <div class="profile_page_form_section">
+        <div class="custom_container_two">
+          {% include 'partial_templates/flash_messages.html' %}
+          <form method="POST" data-parsley-validate="">
+            <div class="profile_form_data_section">
+              <div class="profile_form_data_box">
+                <div class="profile_form_data_single_box_three">
+                  <div class="profile_form_data_single_box_two">
+                    <div class="profile_form_form_fields">
+                      <span>Key</span>
+                      <input type="text" placeholder="Key" name="cb_key" value="{{ current_user.cb_credentials.cb_key }}" data-parsley-required="true">
+                    </div>
+                  </div>
+                  <div class="profile_form_data_single_box_two">
+                    <div class="profile_form_form_fields">
+                      <span>Secret </span>
+                      <input type="text" placeholder="Secret" name="cb_secret" value="{{ current_user.cb_credentials.cb_secret }}" data-parsley-required="true">
+                    </div>
+                  </div>
+                  <div class="profile_form_data_single_box_two">
+                    <div class="profile_form_form_fields">
+                      <span>Password</span>
+                      <input type="text" placeholder="Password" name="cb_password" value="{{ current_user.cb_credentials.cb_password }}" data-parsley-required="true">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="profile_submit_btn">
+                <button><i class="fal fa-check-circle"></i><span>Connect Greezy</span></button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
-
-
-  </form>
-</div>  
-</div>
-
-<!-- profile end -->
-
- 
-</div>
-
-
-<script>
-$(document).ready(function() {
-    $(".dashboard").click(function () {
-        if(!$(this).hasClass('active'))
-        {
-            $(".sidebar_menu_list_items.active").removeClass("active");
-            $(this).addClass("active");        
-        }
-    });
-    $(".profile").click(function () {
-        if(!$(this).hasClass('active'))
-        {
-            $(".sidebar_menu_list_items.active").removeClass("active");
-            $(this).addClass("active");        
-        }
-    });
-    $(".connect_greezy").click(function () {
-        if(!$(this).hasClass('active'))
-        {
-            $(".sidebar_menu_list_items.active").removeClass("active");
-            $(this).addClass("active");        
-        }
-    });
-    $(".strategy").click(function () {
-        if(!$(this).hasClass('active'))
-        {
-            $(".sidebar_menu_list_items.active").removeClass("active");
-            $(this).addClass("active");        
-        }
-    });
-    $(".affiliation").click(function () {
-        if(!$(this).hasClass('active'))
-        {
-            $(".sidebar_menu_list_items.active").removeClass("active");
-            $(this).addClass("active");        
-        }
-    });
-    $(".telegram").click(function () {
-        if(!$(this).hasClass('active'))
-        {
-            $(".sidebar_menu_list_items.active").removeClass("active");
-            $(this).addClass("active");        
-        }
-    });
-    $(".website").click(function () {
-        if(!$(this).hasClass('active'))
-        {
-            $(".sidebar_menu_list_items.active").removeClass("active");
-            $(this).addClass("active");        
-        }
-    });
-    $(".support").click(function () {
-        if(!$(this).hasClass('active'))
-        {
-            $(".sidebar_menu_list_items.active").removeClass("active");
-            $(this).addClass("active");        
-        }
-    });
-});
-
-</script>
- </body>
+  </body>
  </html>   
