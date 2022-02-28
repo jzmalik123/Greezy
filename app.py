@@ -133,7 +133,8 @@ def signup():
 @app.route('/home')
 def home():
     redirectIfSessionNotExists()
-    return render_template('home.html', pageTitle='Home', cssFile='dashboard')
+    current_user = User.query.filter_by(id=session['user_id']).first()
+    return render_template('home.html', pageTitle='Home', cssFile='dashboard', current_user=current_user)
 
 
 @app.route('/logout')
