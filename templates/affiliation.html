@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+  {% include 'partial_templates/head.html' %}
+  <style>
+
+  .affiliation_page_section{
+  display: block;
+  float: left;
+  width: 100%;
+  padding: 0px 40px 70px 40px;
+}
+.affiliate_custom_container{
+max-width: 770px;
+}
+.affiliation_page_box{
+  display: flex;
+  flex-direction: column;
+  gap: 80px 0px;
+  width: 100%;
+}
+.affiliation_progress_bar{
+  display: flex;
+  flex-direction: column;
+  gap: 10px 0px;
+  width: 100%;
+}
+.affiliation_progress_bar p{
+  font-style: normal;
+font-weight: 500;
+font-size: 20px;
+line-height: 30px;
+color: #F5F5FF;
+margin: 0px;
+}
+
+
+.progress_status {
+  height: 14px;
+  position: relative;
+  overflow: hidden;
+  background: rgba(254, 166, 42, 0.22);
+border-radius: 100px;
+width: 90%;
+}
+
+.progress_status span {
+  display: block;
+  height: 100%;
+}
+
+.progress_status span .progress_bar {
+  background-color:
+rgba(254, 166, 42, 1);
+  animation: progressBar 3s ease-in-out;
+  animation-fill-mode: both;
+  border-radius: 100px;
+}
+
+@keyframes progressBar {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 100%;
+  }
+}
+.affiliation_custom_field{
+  max-width: 600px;
+}
+
+.affiliation_status_box{
+  display: grid;
+  grid-template-columns:1fr 1fr 1fr;
+   gap: 30px 30px;
+ width: 100%;
+  }
+.affiliation_status_box_data{
+  display: flex;
+  flex-direction: column;
+  gap: 20px 0px;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+.affiliation_status_box_data small{
+  font-style: normal;
+font-weight: 300;
+font-size: 25px;
+line-height: 16px;
+color: #F5F5FF;
+text-align: center;
+}
+.affiliation_status_box_content{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  background: radial-gradient(97.57% 210.75% at 0.9% 2.98%, rgba(22, 22, 22, 0.4) 0%, rgba(255, 255, 255, 0) 100%);
+  height: 116px;
+  border-radius: 10px;
+  border:2px solid #499FB4;
+  padding: 10px 10px;
+}
+.affiliation_status_box_content h5{
+  font-style: normal;
+font-weight: bold !important;
+font-size: 60px;
+line-height: 90px;
+margin: 0px;
+color: #FFFFFF;
+}
+.affiliation_status_box_content p{
+  font-style: normal;
+font-weight: 500;
+font-size: 20px;
+line-height: 30px;
+text-align: center;
+color: #F5F5FF;
+margin: 0px;
+}
+
+.profile_form_form_fields{
+  display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap:10px 0px;
+
+}
+.profile_form_form_fields span{
+  font-style: normal;
+font-weight: 300;
+font-size: 18px;
+line-height: 16px;
+color: #F5F5FF;
+}
+.profile_form_form_fields input{
+  background: radial-gradient(97.57% 210.75% at 0.9% 2.98%, rgba(22, 22, 22, 0.4) 0%, rgba(255, 255, 255, 0) 100%);
+backdrop-filter: blur(42px);
+border-radius: 5px;
+font-style: normal;
+font-weight: 500;
+font-size: 16px;
+line-height: 16px;
+display: flex;
+align-items: center;
+width: 100%;
+letter-spacing: -0.009em;
+color: #868691;
+height: 48px;
+padding: 0px 15px;
+border: 1px solid rgb(22, 22, 22);
+}
+.profile_form_form_fields input::placeholder{
+font-style: normal;
+font-weight: 500;
+font-size: 16px;
+letter-spacing: -0.009em;
+color: #868691;
+}
+
+
+@media (max-width: 1024px){
+.affiliation_page_section{
+    padding: 0px 30px 70px 30px;
+}
+}
+@media (max-width: 767px){
+.affiliation_status_box {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (max-width: 540px){
+.affiliation_status_box {
+    grid-template-columns: 1fr;
+  }
+  .progress_status {
+    width: 100%;
+}
+}
+
+</style>
+  <body>
+    {% include 'partial_templates/sidebar.html' %}
+    <div class="body_main">
+      {% include 'partial_templates/top_nav.html' %}
+      <div class="dashboard_header">
+        <div class="custom_container">
+          <div class="dashboard_title">
+             <div class="dashboard_welcome_text">
+               <h2>Affiliation</h2>
+               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do .</p>
+             </div>
+             <div class="dashboard_logo"><img src="image/logo.png"></div>
+          </div>
+        </div>
+      </div>
+      <div class="affiliation_page_section">
+         <div class="affiliate_custom_container">
+           <div class="affiliation_page_box">
+             <div class="affiliation_progress_bar">
+               <p>400€ / 500€ </p>
+               <div class="progress_status">
+                <span style="width:80%;"><span class="progress_bar"></span></span>
+               </div>
+             </div>
+             <div class="affiliation_status_box">
+                 <div class="affiliation_status_box_data">
+                   <small>Nombre d’affiliés</small>
+                   <div class="affiliation_status_box_content">
+                       <h5>15</h5>
+                   </div>
+                 </div>
+                 <div class="affiliation_status_box_data">
+                  <small>Mon grade </small>
+                  <div class="affiliation_status_box_content">
+                      <img src="{{ url_for('static', filename='images/affi.png') }}">
+                  </div>
+                </div>
+
+                <div class="affiliation_status_box_data">
+                  <small>Récompense </small>
+                  <div class="affiliation_status_box_content">
+                     <p>Lorem ipsum dolor sit amet.</p>
+                  </div>
+                </div>
+             </div>
+             <div class="affiliation_custom_field">
+                <div class="profile_form_form_fields">
+                  <span>Mon code d’affiliation</span>
+                  <input type="text" placeholder="Code d’affiliation" name="name">
+                </div>
+             </div>
+           </div>
+         </div>
+      </div>
+    </div>
+  </body>
+</html>

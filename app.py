@@ -201,6 +201,24 @@ def strategy():
     return render_template('strategy.html', cssFile="dashboard", current_user=current_user, pageTitle="Strategy")
 
 
+@app.route('/affiliation', methods=['GET', 'POST'])
+def affiliation():
+    redirectIfSessionNotExists()
+    current_user = User.query.filter_by(id=session['user_id']).first()
+    if request.method == 'POST':
+        current_user.strategy.currency_id = request.form['currency_id']
+        current_user.strategy.aggressiveness = request.form['aggressiveness']
+        current_user.strategy.stop_loss = request.form['stop_loss']
+        current_user.strategy.minimum_gains = request.form['minimum_gains']
+        current_user.strategy.audacity = request.form['audacity']
+        try:
+            db.session.commit()
+            flash("Strategy updated successfully", "success")
+        except:
+            flash("Error in updating Strategy", "danger")
+    return render_template('affiliation.html', cssFile="dashboard", current_user=current_user, pageTitle="Affiliation")
+
+
 @app.context_processor
 def context_processor():
     return dict(logoURL=url_for('static', filename='images/logo.png'))
