@@ -384,6 +384,108 @@ color: #F5F5FF;
 
 
 </style>
+  <style>
+                    .custom_check_box_fields {
+                      display: grid;
+                      grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+                      width: 100%;
+                      gap: 35px 20px;
+                      align-items: flex-start;
+                    }
+                    .single_custom_check_box {
+                      display: grid;
+                      width: 100%;
+                      grid-template-columns: 100%;
+                      gap: 35px;
+                    }
+                    .signup_single_checkbox_field {
+                      display: flex;
+                      align-items: center;
+                      width: 100%;
+                    }
+                    .signup_single_checkbox_field p {
+                      font-family: Poppins;
+                      font-style: normal;
+                      font-weight: 300;
+                      font-size: 18px;
+                      line-height: 16px;
+                      display: flex;
+                      align-items: center;
+                      color: #f5f5ff;
+                      padding-left: 10px;
+                      margin: 0px;
+                    }
+                    .signup_single_checkbox_content {
+                      width: 25px;
+                      height: 25px;
+                    }
+                    .signup_custom_checkbox_input {
+                      width: 25px;
+                      height: 25px;
+                      position: relative;
+                      display: inline-block;
+                      margin: 0px;
+                    }
+                    .signup_custom_checkbox_input input {
+                      opacity: 0;
+                      width: 0;
+                      height: 0;
+                    }
+                    .signup_custom_checkbox_input .checked_input_style {
+                      position: absolute;
+                      cursor: pointer;
+                      top: 0;
+                      left: 0;
+                      right: 0;
+                      bottom: 0;
+                      background-color: unset;
+                      -webkit-transition: 0.4s;
+                      transition: 0.4s;
+                      display: flex;
+                      width: 100%;
+                      justify-content: center;
+                      align-items: center;
+                      height: 100%;
+                      box-shadow: 0px 4px 6px rgba(95, 200, 220, 0.35);
+                      border-radius: 4px;
+                      border: 3px solid #f5f5f5;
+                    }
+                    .signup_custom_checkbox_input .checked_input_style i {
+                      color: #ccd6eb;
+                      font-size: 14px;
+                    }
+                    .parent_custom_check_box_fields {
+                      display: grid;
+                      width: 100%;
+                    }
+                    .parent_custom_check_box_fields h3 {
+                      color: #f5f5ff;
+                      font-family: Poppins;
+                      font-style: normal;
+                      font-weight: 300;
+                      font-size: 18px;
+                      line-height: 16px;
+                      margin: 0px;
+                      padding-bottom: 28px;
+                    }
+                    .signup_custom_checkbox_input
+                      input:checked
+                      + .checked_input_style {
+                      border-color: rgba(22, 104, 123, 1);
+                      box-shadow: 0px 4px 6px rgba(95, 200, 220, 0.35);
+                    }
+                    .signup_custom_checkbox_input
+                      input:checked
+                      + .checked_input_style
+                      i {
+                      color: rgba(22, 104, 123, 1);
+                    }
+                    @media (max-width: 540px) {
+                      .custom_check_box_fields {
+                        grid-template-columns: 1fr 1fr;
+                      }
+                    }
+                  </style>
   <body>
     {% include 'partial_templates/sidebar.html' %}
     <div class="body_main">
@@ -471,6 +573,30 @@ color: #F5F5FF;
                       <span>Minimum gains (%)</span>
                       <div class="profile_form_select_fields">
                         <input type="number" step='0.01' name="minimum_gains" value='{{ current_user.strategy.minimum_gains }}' placeholder='0.00' >
+                      </div>
+                    </div>
+                  </div>
+                  <div class="parent_custom_check_box_fields mb-5">
+                    <h3>Choose your cryptocurrencies</h3>
+                    <div class="custom_check_box_fields">
+                      {% for i in range(all_coins|length) %}
+                        {% if i != 0 and i % 5 == 0 %}
+                          </div>
+                        {% endif %}
+                        {% if i % 5 == 0 %}
+                          <div class="single_custom_check_box">
+                        {% endif %}
+                        <div class="signup_single_checkbox_field">
+                          <div class="signup_single_checkbox_content">
+                            <label class="signup_custom_checkbox_input">
+                              <input type="checkbox" name="coins[]" value="{{ all_coins[i] }}" {{ "checked" if (all_coins[i] in current_user.coins) }} />
+                              <span class="checked_input_style"><i class="fas fa-check"></i></span>
+                            </label>
+                          </div>
+                          <p class="checked_text_style">{{ all_coins[i] }}</p>
+                        </div>
+                      {% endfor %}
+                        </div>
                       </div>
                     </div>
                   </div>

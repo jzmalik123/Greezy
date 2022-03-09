@@ -1,6 +1,7 @@
 from flask import Flask, request, flash, url_for, redirect, render_template, session
 from werkzeug.routing import RequestRedirect
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///greezy_db.sqlite3'
@@ -8,8 +9,10 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 app.secret_key = "my_secret"
+all_coins = ['BTC', 'ENJ', 'BAL', 'BCH', 'BNT', 'EOS', 'ETH', 'ETC', 'FIL', 'GRT', 'KNC', 'LRC', 'LTC', 'MKR', 'NMR', 'OXT', 'OMG', 'REP', 'REN','UMA', 'XLM', 'XRP', 'XTZ', 'UNI', 'YFI', 'ZEC', 'ZRX']
 
 db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 
 
 class User(db.Model):
@@ -25,6 +28,7 @@ class User(db.Model):
     city = db.Column(db.String(50))
     cryptocurrency = db.Column(db.String(50))
     wallet = db.Column(db.String(100))
+    coins = db.Column(db.JSON)
     cb_credentials = db.relationship("CBCredentials", backref="user", uselist=False)
     strategy = db.relationship('Strategy', backref='user', uselist=False)
 
@@ -193,12 +197,13 @@ def strategy():
         current_user.strategy.stop_loss = request.form['stop_loss']
         current_user.strategy.minimum_gains = request.form['minimum_gains']
         current_user.strategy.audacity = request.form['audacity']
+        current_user.coins = request.form.getlist('coins[]')
         try:
             db.session.commit()
             flash("Strategy updated successfully", "success")
         except:
             flash("Error in updating Strategy", "danger")
-    return render_template('strategy.html', cssFile="dashboard", current_user=current_user, pageTitle="Strategy")
+    return render_template('strategy.html', cssFile="dashboard", current_user=current_user, pageTitle="Strategy", all_coins=all_coins)
 
 
 @app.route('/affiliation', methods=['GET', 'POST'])
