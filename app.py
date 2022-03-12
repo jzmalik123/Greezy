@@ -60,6 +60,10 @@ class User(db.Model):
         currency_id = self.strategy.currency_id
         return "USD" if currency_id == 1 else 'EUR'
 
+    def getFiatSymbol(self):
+        currency_id = self.strategy.currency_id
+        return "$" if currency_id == 1 else '£'
+
     def getAccountID(self, fiatName):
         auth = cbProAuth(self)
         for account in auth.get_accounts():
@@ -177,12 +181,13 @@ def home():
     redirectIfSessionNotExists()
     current_user = User.query.filter_by(id=session['user_id']).first()
     fiatBalance = round(current_user.getFiatBalance())
+    fiatSymbol = current_user.getFiatSymbol()
     coins_hash = current_user.getCoinsData()
     chartData = [{"x": coin["currency"], "value": float(coin['balance'])} for coin in coins_hash if
                  coin['currency'] in current_user.coins]
 
     return render_template('home.html', pageTitle='Home', cssFile='dashboard', current_user=current_user,
-                           fiatBalance=fiatBalance, chartData=json.dumps(chartData))
+                           fiatBalance=fiatBalance, chartData=json.dumps(chartData), fiatSymbol=fiatSymbol)
 
 
 @app.route('/logout')
