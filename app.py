@@ -137,24 +137,6 @@ def redirectIfSessionNotExists():
         raise RequestRedirect(url_for('login'))
 
 
-@app.route('/admin')
-def hello_admin():
-    return 'Hello Admin'
-
-
-@app.route('/guest/<guest>')
-def hello_guest(guest):
-    return 'Hello %s as Guest' % guest
-
-
-@app.route('/user/<name>')
-def hello_user(name):
-    if name == 'admin':
-        return redirect(url_for('hello_admin'))
-    else:
-        return redirect(url_for('hello_guest', guest=name))
-
-
 @app.route('/')
 def index():
     return redirect(url_for('home')) if sessionExists() else redirect(url_for('login'))
