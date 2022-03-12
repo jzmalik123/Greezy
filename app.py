@@ -2,6 +2,10 @@ from flask import Flask, request, flash, url_for, redirect, render_template, ses
 from werkzeug.routing import RequestRedirect
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+import datetime as dt
+import time
+import cbpro
+import json
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///greezy_db.sqlite3'
@@ -9,10 +13,24 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 app.secret_key = "my_secret"
-all_coins = ['BTC', 'ENJ', 'BAL', 'BCH', 'BNT', 'EOS', 'ETH', 'ETC', 'FIL', 'GRT', 'KNC', 'LRC', 'LTC', 'MKR', 'NMR', 'OXT', 'OMG', 'REP', 'REN','UMA', 'XLM', 'XRP', 'XTZ', 'UNI', 'YFI', 'ZEC', 'ZRX']
+all_coins = ['BTC', 'ENJ', 'BAL', 'BCH', 'BNT', 'EOS', 'ETH', 'ETC', 'FIL', 'GRT', 'KNC', 'LRC', 'LTC', 'MKR', 'NMR',
+             'OXT', 'OMG', 'REP', 'REN', 'UMA', 'XLM', 'XRP', 'XTZ', 'UNI', 'YFI', 'ZEC', 'ZRX']
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
+
+
+###### UTILITY FUNCTIONS #######
+
+def cbProAuth(user):
+    try:
+        auth = cbpro.AuthenticatedClient(user.cb_credentials.cb_key, user.cb_credentials.cb_secret,
+                                         user.cb_credentials.cb_password)
+        return auth
+    except Exception as error:
+        print('Error! cbProAuth():', error)
+
+###### MODELS #################
 
 
 class User(db.Model):
@@ -37,6 +55,26 @@ class User(db.Model):
         self.phone = phone
         self.email = email
         self.password = password
+
+    def getFiatName(self):
+        currency_id = self.strategy.currency_id
+        return "USD" if currency_id == 1 else 'EUR'
+
+    def getAccountID(self, fiatName):
+        auth = cbProAuth(self)
+        for account in auth.get_accounts():
+            if account['currency'] == fiatName:
+                return account['id']
+
+    def getFiatBalance(self):
+        auth = cbProAuth(self)
+        fiatName = self.getFiatName()
+        i = float(auth.get_account(self.getAccountID(fiatName))['available'])
+        return i
+
+    def getCoinsData(self):
+        auth = cbProAuth(self)
+        return auth.get_accounts()
 
 
 class CBCredentials(db.Model):
@@ -138,7 +176,13 @@ def signup():
 def home():
     redirectIfSessionNotExists()
     current_user = User.query.filter_by(id=session['user_id']).first()
-    return render_template('home.html', pageTitle='Home', cssFile='dashboard', current_user=current_user)
+    fiatBalance = round(current_user.getFiatBalance())
+    coins_hash = current_user.getCoinsData()
+    chartData = [{"x": coin["currency"], "value": float(coin['balance'])} for coin in coins_hash if
+                 coin['currency'] in current_user.coins]
+
+    return render_template('home.html', pageTitle='Home', cssFile='dashboard', current_user=current_user,
+                           fiatBalance=fiatBalance, chartData=json.dumps(chartData))
 
 
 @app.route('/logout')
@@ -184,7 +228,8 @@ def connect_greezy():
             flash("Coinbase Credentials updated successfully", "success")
         except:
             flash("Error in updating Coinbase Credentials", "danger")
-    return render_template('connect_greezy.html', cssFile="dashboard", current_user=current_user, pageTitle="Connect Greezy")
+    return render_template('connect_greezy.html', cssFile="dashboard", current_user=current_user,
+                           pageTitle="Connect Greezy")
 
 
 @app.route('/strategy', methods=['GET', 'POST'])
@@ -203,7 +248,8 @@ def strategy():
             flash("Strategy updated successfully", "success")
         except:
             flash("Error in updating Strategy", "danger")
-    return render_template('strategy.html', cssFile="dashboard", current_user=current_user, pageTitle="Strategy", all_coins=all_coins)
+    return render_template('strategy.html', cssFile="dashboard", current_user=current_user, pageTitle="Strategy",
+                           all_coins=all_coins)
 
 
 @app.route('/affiliation', methods=['GET', 'POST'])
