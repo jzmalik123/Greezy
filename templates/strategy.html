@@ -537,11 +537,11 @@ color: #F5F5FF;
                        <div class="strategy_range_selector">
                           <p>Agressivité de la stratégie</p>
                           <div class="range-slider">
-                            <input type="range" data-parsley-range="[1, 9]" value="{{ current_user.strategy.aggressiveness }}" class="range_slider_thumb" name="aggressiveness">
+                            <input type="range" data-parsley-range="[1, 6]" min="1" max="6" step="1" value="{{ current_user.strategy.aggressiveness }}" class="range_slider_thumb" name="aggressiveness">
                           </div>
                           <div class="strategy_range_selector_limits">
                              <span>1</span>
-                             <span>9</span>
+                             <span>6</span>
                           </div>
                        </div>
                     </div>

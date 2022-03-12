@@ -2,7 +2,6 @@ from flask import Flask, request, flash, url_for, redirect, render_template, ses
 from werkzeug.routing import RequestRedirect
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-import datetime as dt
 import time
 import cbpro
 import json
@@ -47,6 +46,7 @@ class User(db.Model):
     cryptocurrency = db.Column(db.String(50))
     wallet = db.Column(db.String(100))
     coins = db.Column(db.JSON)
+    profit = db.Column('profit', db.Float, default=0.0)
     cb_credentials = db.relationship("CBCredentials", backref="user", uselist=False)
     strategy = db.relationship('Strategy', backref='user', uselist=False)
 
@@ -79,6 +79,29 @@ class User(db.Model):
     def getCoinsData(self):
         auth = cbProAuth(self)
         return auth.get_accounts()
+
+    def getTotals(self):
+        auth = cbProAuth(self)
+        fiatBalance = self.getFiatBalance()
+        fiat = self.getFiatName()
+        total = fiatBalance
+        for account in auth.get_accounts():
+            try:
+                coin = account['currency']
+                currency = str(coin + '-' + fiat)
+                owned = float(account['balance'])
+
+                if owned > 0:
+                    time.sleep(.5)
+                    price = float(auth.get_product_ticker(product_id=currency)['price'])
+                    value = owned * price
+                    total = total + value
+                    if coin in [fiat, 'USDC', 'SHIB', 'DOGE']:
+                        continue
+            except Exception as e:
+                time.sleep(1)
+                continue
+        return total
 
 
 class CBCredentials(db.Model):
