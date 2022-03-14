@@ -123,7 +123,7 @@ class Strategy(db.Model):
 
 
 def sessionExists():
-    return session['user_id'] is not None
+    return 'user_id' in session.keys() and session['user_id'] is not None
 
 
 def redirectIfSessionExists():
