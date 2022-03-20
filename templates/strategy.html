@@ -485,6 +485,18 @@ color: #F5F5FF;
                         grid-template-columns: 1fr 1fr;
                       }
                     }
+                    .signup_custom_checkbox_input
+                      input:checked
+                      + .checked_input_style
+                      i {
+                      color: rgba(22, 104, 123, 1);
+                      display: block;
+                    }
+                    .signup_custom_checkbox_input .checked_input_style i {
+                      color: #ccd6eb;
+                      font-size: 14px;
+                      display: none;
+                    }
                   </style>
   <body>
     {% include 'partial_templates/sidebar.html' %}
