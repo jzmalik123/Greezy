@@ -277,7 +277,8 @@ color: #ECE7E2;
       </div>
       <div class="profile_page_form_section">
         <div class="custom_container_two">
-          <form method="POST">
+          {% include 'partial_templates/flash_messages.html' %}
+          <form method="POST" enctype="multipart/form-data">
             <div class="profile_form_data_section">
               <div class="profile_form_data_box">
                 <div class="profile_form_data_single_box_three">
@@ -301,7 +302,7 @@ color: #ECE7E2;
                   <div class="profile_form_data_single_box_two">
                     <div class="profile_form_form_fields">
                       <span>Message</span>
-                     <textarea name="message" placeholder="Please write your detail question here."></textarea>
+                      <textarea name="message" placeholder="Please write your detail question here."></textarea>
                     </div>
                   </div>
                   <div class="support_form_ducument_input">

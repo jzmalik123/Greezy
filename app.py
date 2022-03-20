@@ -7,6 +7,7 @@ from flask_migrate import Migrate
 import time
 import cbpro
 import json
+from flask_mail import Mail, Message
 
 from werkzeug.utils import secure_filename
 
@@ -16,6 +17,16 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 app.config['UPLOAD_FOLDER'] = 'uploads/kyc'
+
+#### EMAIL CONFIG ####
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USERNAME'] = 'jzmalik123@gmail.com'
+app.config['MAIL_PASSWORD'] = '**********'
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+
+SUPPORT_EMAIL = 'jzmalik123@gmail.com'
 app.secret_key = "my_secret"
 all_coins = ['BTC', 'ENJ', 'BAL', 'BCH', 'BNT', 'EOS', 'ETH', 'ETC', 'FIL', 'GRT', 'KNC', 'LRC', 'LTC', 'MKR', 'NMR',
              'OXT', 'OMG', 'REP', 'REN', 'UMA', 'XLM', 'XRP', 'XTZ', 'UNI', 'YFI', 'ZEC', 'ZRX']
@@ -23,6 +34,7 @@ ALLOWED_EXTENSIONS = {'pdf', 'png', 'jpg', 'jpeg'}
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
+mail = Mail(app)
 
 
 ###### UTILITY FUNCTIONS #######
@@ -38,6 +50,7 @@ def cbProAuth(user):
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
 ###### MODELS #################
 
 
@@ -304,16 +317,22 @@ def support():
     redirectIfSessionNotExists()
     current_user = User.query.filter_by(id=session['user_id']).first()
     if request.method == 'POST':
-        current_user.strategy.currency_id = request.form['currency_id']
-        current_user.strategy.aggressiveness = request.form['aggressiveness']
-        current_user.strategy.stop_loss = request.form['stop_loss']
-        current_user.strategy.minimum_gains = request.form['minimum_gains']
-        current_user.strategy.audacity = request.form['audacity']
+        subject = request.form['subject']
+        message = request.form['message']
+        sender_email = current_user.email
+
+        msg = Message(subject, sender=sender_email, recipients=[SUPPORT_EMAIL])
+        msg.body = message
+        # check if the post request has the file part
+        file = request.files['attachment']
+        if file:
+            filename = secure_filename(file.filename)
+            msg.attach(filename, file.mimetype, file.stream.read())
         try:
-            db.session.commit()
-            flash("Strategy updated successfully", "success")
-        except:
-            flash("Error in updating Strategy", "danger")
+            mail.send(msg)
+            flash("Message sent successfully", "success")
+        except Exception as e:
+            print(e)
     return render_template('support.html', cssFile="dashboard", current_user=current_user, pageTitle="Support")
 
 
