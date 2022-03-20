@@ -69,7 +69,7 @@ for user in all_users:
 
         desiredGain = 1+(user.strategy.minimum_gains / float(100.00)) # this is the minimum gain before considering a sell. 1.00 = 0%, gain 1.02 = 2% gain, 1.33 = 33% gain
         desiredBuy = desiredGain - 1  # this is the minimum price percentage decrease before considering a buy 0.15 = 15%
-        stopLoss = None  # left for now
+        stopLoss = None  # left for now but use => user.strategy.stop_loss
         print('\n', margin, margin, 'startingPortfolio Value:', startingValue, '\n', margin, margin, fiat, 'balance:', cash)
 
         for coin in coins:
