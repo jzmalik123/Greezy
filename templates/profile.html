@@ -219,7 +219,7 @@ color: #ECE7E2;
       <div class="profile_page_form_section">
         <div class="custom_container_two">
           {% include 'partial_templates/flash_messages.html' %}
-          <form method="POST" action="{{ url_for('profile') }}" id="quick_contact_new_recap" novalidate="novalidate" data-parsley-validate="">
+          <form method="POST" action="{{ url_for('profile') }}" id="quick_contact_new_recap" novalidate="novalidate" data-parsley-validate="" enctype="multipart/form-data">
             <div class="profile_form_data_section">
               <div class="profile_form_data_box">
                 <div class="profile_form_data_box_heading"><h6>About you</h6></div>
@@ -287,6 +287,7 @@ color: #ECE7E2;
                   </div>
                 </div>
               </div>
+              {% if not current_user.kyc_verified %}
               <div class="profile_form_data_box">
                 <div class="profile_form_data_box_heading"><h6>KYC</h6></div>
                 <div class="profile_form_data_box_docment">
@@ -299,6 +300,7 @@ color: #ECE7E2;
                   </div>
                 </div>
               </div>
+              {% endif %}
               <div class="profile_submit_btn">
                 <button><i class="fal fa-check-circle"></i><span>Validate modifications</span></button>
               </div>

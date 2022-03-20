@@ -1,3 +1,5 @@
+import os
+
 from flask import Flask, request, flash, url_for, redirect, render_template, session
 from werkzeug.routing import RequestRedirect
 from flask_sqlalchemy import SQLAlchemy
@@ -6,14 +8,18 @@ import time
 import cbpro
 import json
 
+from werkzeug.utils import secure_filename
+
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///greezy_db.sqlite3'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
+app.config['UPLOAD_FOLDER'] = 'uploads/kyc'
 app.secret_key = "my_secret"
 all_coins = ['BTC', 'ENJ', 'BAL', 'BCH', 'BNT', 'EOS', 'ETH', 'ETC', 'FIL', 'GRT', 'KNC', 'LRC', 'LTC', 'MKR', 'NMR',
              'OXT', 'OMG', 'REP', 'REN', 'UMA', 'XLM', 'XRP', 'XTZ', 'UNI', 'YFI', 'ZEC', 'ZRX']
+ALLOWED_EXTENSIONS = {'pdf', 'png', 'jpg', 'jpeg'}
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
@@ -29,6 +35,9 @@ def cbProAuth(user):
     except Exception as error:
         print('Error! cbProAuth():', error)
 
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 ###### MODELS #################
 
 
@@ -46,6 +55,7 @@ class User(db.Model):
     cryptocurrency = db.Column(db.String(50))
     wallet = db.Column(db.String(100))
     coins = db.Column(db.JSON)
+    kyc_verified = db.Column(db.Boolean, default=False)
     profit = db.Column('profit', db.Float, default=0.0)
     cb_credentials = db.relationship("CBCredentials", backref="user", uselist=False)
     strategy = db.relationship('Strategy', backref='user', uselist=False)
@@ -217,7 +227,16 @@ def profile():
         current_user.city = request.form['city']
         current_user.cryptocurrency = request.form['cryptocurrency']
         current_user.wallet = request.form['wallet']
+
+        # check if the post request has the file part
+        file = request.files['kyc']
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            current_user.kyc_verified = True
+            flash("KYC Verification done successfully", "success")
         try:
+            db.session.add(current_user)
             db.session.commit()
             flash("Profile updated successfully", "success")
         except:
