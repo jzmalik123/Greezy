@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+  {% include 'partial_templates/head.html' %}
+  <style>
+.profile_page_form_section{
+  display: block;
+  float: left;
+  width: 100%;
+  padding: 0px 40px 70px 40px;
+}
+.custom_container_two{
+  max-width: 630px;
+}
+.profile_form_data_section{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 50px 0px;
+}
+.profile_form_data_box{
+  display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 25px 0px;
+}
+.profile_form_data_box_heading h6{
+  font-style: normal;
+font-weight: 500;
+font-size: 20px;
+line-height: 30px;
+color: #489EB4;
+mix-blend-mode: normal;
+opacity: 0.9;
+text-shadow: 0px 4px 55px #489EB4;
+margin: 0px;
+}
+.profile_form_data_single_box{
+  display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 40px 0px;
+}
+.profile_form_data_inner_box{
+  width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    gap: 40px 15px;
+    grid-template-areas: ". .";
+}
+.profile_form_data_single_box_three{
+  display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 20px 0px;
+}
+.profile_form_data_single_box_four{
+  display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 40px 0px;
+}
+.profile_form_data_box_docment{
+  display: flex;
+  flex-direction: column;
+  gap: 30px 0px;
+ width: 100%;
+}
+.profile_form_data_box_docment p{
+  font-style: normal;
+font-weight: 300;
+font-size: 14px;
+line-height: 16px;
+color: #F5F5FF;
+margin: 0px;
+}
+.profile_form_data_box_docment p span{
+color: #fff;
+font-weight: 800;
+}
+.profile_form_form_fields{
+  display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap:10px 0px;
+
+}
+.profile_form_form_fields span{
+  font-style: normal;
+font-weight: 300;
+font-size: 18px;
+line-height: 16px;
+color: #F5F5FF;
+}
+.profile_form_form_fields input{
+  background: radial-gradient(97.57% 210.75% at 0.9% 2.98%, rgba(22, 22, 22, 0.4) 0%, rgba(255, 255, 255, 0) 100%);
+backdrop-filter: blur(42px);
+border-radius: 5px;
+font-style: normal;
+font-weight: 500;
+font-size: 16px;
+line-height: 16px;
+display: flex;
+align-items: center;
+width: 100%;
+letter-spacing: -0.009em;
+color: #868691;
+height: 48px;
+padding: 0px 15px;
+border: 1px solid rgb(22, 22, 22);
+}
+.profile_form_form_fields input::placeholder{
+font-style: normal;
+font-weight: 500;
+font-size: 16px;
+letter-spacing: -0.009em;
+color: #868691;
+}
+.profile_form_form_fields textarea{
+  background: radial-gradient(97.57% 210.75% at 0.9% 2.98%, rgba(22, 22, 22, 0.4) 0%, rgba(255, 255, 255, 0) 100%);
+backdrop-filter: blur(42px);
+border-radius: 5px;
+font-style: normal;
+font-weight: 500;
+font-size: 16px;
+line-height: 16px;
+display: flex;
+align-items: center;
+width: 100%;
+letter-spacing: -0.009em;
+color: #868691;
+height: 150px;
+padding: 20px 15px;
+border: 1px solid rgb(22, 22, 22);
+}
+.profile_form_form_fields textarea::placeholder{
+font-style: normal;
+font-weight: 500;
+font-size: 16px;
+letter-spacing: -0.009em;
+color: #868691;
+}
+.profile_form_select_fields{
+  position: relative;
+  width: 100%;
+  height: 100%;
+  }
+.profile_form_select_fields select{
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background: radial-gradient(97.57% 210.75% at 0.9% 2.98%, rgba(22, 22, 22, 0.4) 0%, rgba(255, 255, 255, 0) 100%);
+backdrop-filter: blur(42px);
+border-radius: 5px;
+font-style: normal;
+font-weight: 500;
+font-size: 16px;
+line-height: 16px;
+display: flex;
+align-items: center;
+width: 100%;
+letter-spacing: -0.009em;
+color: #868691;
+height: 48px;
+padding: 0px 15px;
+border: 1px solid rgb(22, 22, 22);
+position: relative;
+}
+.profile_form_select_fields::after{
+  position: absolute;
+  content: "\f078";
+height: 100%;
+display: flex;
+align-items: center;
+font-size: 16px;
+color: #499FB4;
+top: 0px;
+right: 15px;
+font-family: "Font Awesome 5 Free"; font-weight: 900;
+  }
+.profile_form_form_fields select::placeholder{
+font-style: normal;
+font-weight: 500;
+font-size: 16px;
+letter-spacing: -0.009em;
+color: #868691;
+}
+.support_form_ducument_input{
+width: 100%;
+display: flex;
+}
+.support_form_ducument_input .support_file_input_label{
+display: flex;
+align-items: center;
+text-align: center;
+justify-content: center;
+width: 100%;
+border: 3px solid #333;
+box-sizing: border-box;
+border-radius: 8px;
+height: 72px;
+position: relative;
+cursor: pointer;
+margin: 0px;
+gap: 0px 30px;
+}
+.support_form_ducument_input .support_file_input_label span{
+color: rgba(72, 158, 180, 0.7);
+font-style: normal;
+font-weight: normal;
+font-size: 16px;
+line-height: 19px;
+}
+.support_form_ducument_input .support_file_input_label input[type="file"] {
+    display: none;
+}
+.support_form_ducument_input .support_file_input_label i{
+   color: rgba(72, 158, 180, 0.7);
+   font-style: normal;
+font-weight: normal;
+font-size: 16px;
+line-height: 19px;
+  }
+.profile_submit_btn button{
+  background: linear-gradient(180deg, #FEA62A 0%, #B97D28 100%);
+border-radius: 8px;
+height: 56px;
+width: 260px;
+ display: flex;
+align-items: center;
+justify-content: center;
+gap: 0px 5px;
+border: unset !important;
+}
+
+.profile_submit_btn button i{
+  font-size: 16px;
+color: #ECE7E2;
+}
+.profile_submit_btn button span{
+  font-style: normal;
+font-weight: 600;
+font-size: 16px;
+line-height: 24px;
+color: #ECE7E2;
+}
+.strategy_range_selector{
+  display: flex;
+  flex-direction: column;
+  gap: 15px 0px;
+  width: 100%;
+}
+.strategy_range_selector_limits{
+  display: flex;
+  justify-content: space-between;
+ width: 100%;
+ align-items: center;
+}
+.strategy_range_selector_limits span{
+  font-style: normal;
+font-weight: normal;
+font-size: 14px;
+color: #FFFFFF;
+}
+.currency_btn{
+  display: flex;
+  gap: 15px 15px;
+}
+.currency_btn label input[type="radio"] {
+    display: none;
+}
+.currency_btn label {
+    width: 170px;
+   height: 40px;
+    display: flex;
+    align-items: center;
+   justify-content: center;
+  margin: 0px;
+  }
+  .currency_btn label span{
+    padding: 0px;
+margin: 0px;
+display: flex;
+border: 2px solid rgb(22, 22, 22);
+box-sizing: border-box;
+border-radius: 8px;
+width: 100%;
+background: #000;
+align-items: center;
+justify-content: center;
+gap: 0px 8px;
+height: 100%;
+font-style: normal;
+font-weight: 500;
+font-size: 16px;
+line-height: 24px;
+text-align: center;
+color: #FFF;
+}
+.currency_btn label span img{
+
+}
+.currency_btn label input[type="radio"]:checked ~ span{
+  color: #fff;
+background: radial-gradient(97.57% 210.75% at 0.9% 2.98%, rgba(73, 159, 180, 0.4) 0%, #16687B 100%);
+border: unset;
+box-shadow: 0px 0px 10px rgba(73, 159, 180, 0.6);
+}
+@media (max-width: 1024px){
+.profile_page_form_section {
+    padding: 0px 30px 70px 30px;
+}
+}
+@media (max-width: 540px){
+.contact_us_form_fields {
+    grid-template-columns: 1fr;
+    grid-template-areas: ".";
+}
+.profile_form_data_inner_box {
+    grid-template-columns: 1fr;
+    grid-template-areas: ".";
+}
+.profile_form_data_single_box_three {
+    gap: 40px 0px;
+}
+}
+
+
+/* input range slider start */
+.strategy_range_selector_section{
+  display: flex;
+  flex-direction: column;
+  gap: 15px 0px;
+  width: 100%;
+}
+.strategy_range_selector_section p{
+  font-style: normal;
+font-weight: 300;
+font-size: 18px;
+line-height: 16px;
+color: #F5F5FF;
+}
+ .range-slider {
+  width: 100%;
+}
+
+
+.range_slider_thumb {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 4px;
+  border-radius: 7px;
+  background: #499FB4;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: 0.2s;
+  transition: opacity 0.2s;
+}
+
+.range_slider_thumb::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #ECE7E2;
+  box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  opacity: 1;
+  border: 3px solid #499FB4;
+}
+
+.range_slider_thumb::-moz-range-thumb {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #ECE7E2;
+  box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  border: 3px solid #499FB4;
+  opacity: 1;
+}
+
+/* input range slider end */
+
+
+</style>
+  <style>
+                    .custom_check_box_fields {
+                      display: grid;
+                      grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+                      width: 100%;
+                      gap: 35px 20px;
+                      align-items: flex-start;
+                    }
+                    .single_custom_check_box {
+                      display: grid;
+                      width: 100%;
+                      grid-template-columns: 100%;
+                      gap: 35px;
+                    }
+                    .signup_single_checkbox_field {
+                      display: flex;
+                      align-items: center;
+                      width: 100%;
+                    }
+                    .signup_single_checkbox_field p {
+                      font-family: Poppins;
+                      font-style: normal;
+                      font-weight: 300;
+                      font-size: 18px;
+                      line-height: 16px;
+                      display: flex;
+                      align-items: center;
+                      color: #f5f5ff;
+                      padding-left: 10px;
+                      margin: 0px;
+                    }
+                    .signup_single_checkbox_content {
+                      width: 25px;
+                      height: 25px;
+                    }
+                    .signup_custom_checkbox_input {
+                      width: 25px;
+                      height: 25px;
+                      position: relative;
+                      display: inline-block;
+                      margin: 0px;
+                    }
+                    .signup_custom_checkbox_input input {
+                      opacity: 0;
+                      width: 0;
+                      height: 0;
+                    }
+                    .signup_custom_checkbox_input .checked_input_style {
+                      position: absolute;
+                      cursor: pointer;
+                      top: 0;
+                      left: 0;
+                      right: 0;
+                      bottom: 0;
+                      background-color: unset;
+                      -webkit-transition: 0.4s;
+                      transition: 0.4s;
+                      display: flex;
+                      width: 100%;
+                      justify-content: center;
+                      align-items: center;
+                      height: 100%;
+                      box-shadow: 0px 4px 6px rgba(95, 200, 220, 0.35);
+                      border-radius: 4px;
+                      border: 3px solid #f5f5f5;
+                    }
+                    .signup_custom_checkbox_input .checked_input_style i {
+                      color: #ccd6eb;
+                      font-size: 14px;
+                    }
+                    .parent_custom_check_box_fields {
+                      display: grid;
+                      width: 100%;
+                    }
+                    .parent_custom_check_box_fields h3 {
+                      color: #f5f5ff;
+                      font-family: Poppins;
+                      font-style: normal;
+                      font-weight: 300;
+                      font-size: 18px;
+                      line-height: 16px;
+                      margin: 0px;
+                      padding-bottom: 28px;
+                    }
+                    .signup_custom_checkbox_input
+                      input:checked
+                      + .checked_input_style {
+                      border-color: rgba(22, 104, 123, 1);
+                      box-shadow: 0px 4px 6px rgba(95, 200, 220, 0.35);
+                    }
+                    .signup_custom_checkbox_input
+                      input:checked
+                      + .checked_input_style
+                      i {
+                      color: rgba(22, 104, 123, 1);
+                    }
+                    @media (max-width: 540px) {
+                      .custom_check_box_fields {
+                        grid-template-columns: 1fr 1fr;
+                      }
+                    }
+                    .signup_custom_checkbox_input
+                      input:checked
+                      + .checked_input_style
+                      i {
+                      color: rgba(22, 104, 123, 1);
+                      display: block;
+                    }
+                    .signup_custom_checkbox_input .checked_input_style i {
+                      color: #ccd6eb;
+                      font-size: 14px;
+                      display: none;
+                    }
+                  </style>
+  <body>
+    {% include 'partial_templates/sidebar.html' %}
+    <div class="body_main">
+      {% include 'partial_templates/top_nav.html' %}
+      <div class="dashboard_header">
+        <div class="custom_container">
+          <div class="dashboard_title">
+             <div class="dashboard_welcome_text">
+               <h2>Stratégie trading</h2>
+               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do .</p>
+              </div>
+             <div class="dashboard_logo"><img src="{{ url_for('static', filename='images/logo.png') }}"></div>
+          </div>
+        </div>
+      </div>
+      <div class="profile_page_form_section">
+        <div class="custom_container_two">
+          {% include 'partial_templates/flash_messages.html' %}
+          <form method="POST" data-parsley-validate="">
+            <div class="profile_form_data_section">
+              <div class="profile_form_data_box">
+                <div class="profile_form_data_single_box_four">
+                  <div class="profile_form_data_single_box_two">
+                    <div class="profile_form_form_fields">
+                      <span>Devise native</span>
+                      {% set currency = 'dollar' if current_user.strategy.currency_id == 1 else 'euro' %}
+                      <div class="currency_btn">
+                        <label>
+                          {% if currency == 'dollar' %}
+                            <input value="1" type="radio" name="currency_id" data-parsley-required="true" data-parsley-mincheck="1" checked>
+                          {% else %}
+                            <input value="1" type="radio" name="currency_id" data-parsley-required="true" data-parsley-mincheck="1">
+                          {% endif %}
+                          <span><img src="{{ url_for('static', filename='images/Path.png') }}">Dollar</span>
+                        </label>
+                        <label>
+                          {% if currency == 'euro' %}
+                            <input value="2" type="radio" name="currency_id" checked>
+                          {% else %}
+                            <input value="2" type="radio" name="currency_id">
+                          {% endif %}
+                          <span><img src="{{ url_for('static', filename='images/Pathtwo.png') }}">Euro</span>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="profile_form_data_single_box_two">
+                    <div class="strategy_range_selector_section">
+                       <div class="strategy_range_selector">
+                          <p>Agressivité de la stratégie</p>
+                          <div class="range-slider">
+                            <input type="range" data-parsley-range="[1, 6]" min="1" max="6" step="1" value="{{ current_user.strategy.aggressiveness }}" class="range_slider_thumb" name="aggressiveness">
+                          </div>
+                          <div class="strategy_range_selector_limits">
+                             <span>1</span>
+                             <span>6</span>
+                          </div>
+                       </div>
+                    </div>
+                  </div>
+                  <div class="profile_form_data_single_box_two">
+                    <div class="profile_form_form_fields">
+                      <span>Stop loss (%)</span>
+                      <div class="profile_form_select_fields">
+                         <input type="number" name="stop_loss" value="{{ current_user.strategy.stop_loss }}" data-parsley-required="true" data-parsley-min="1" data-parsley-max="100">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="profile_form_data_single_box_two">
+                    <div class="strategy_range_selector_section">
+                       <div class="strategy_range_selector">
+                          <p>Audace du robot</p>
+                          <div class="range-slider">
+                            <input type="range" data-parsley-range="[1, 9]" name="audacity" value="{{ current_user.strategy.audacity }}" class="range_slider_thumb">
+                          </div>
+                          <div class="strategy_range_selector_limits">
+                             <span>1</span>
+                             <span>9</span>
+                          </div>
+                       </div>
+                    </div>
+                  </div>
+                  <div class="profile_form_data_single_box_two">
+                    <div class="profile_form_form_fields">
+                      <span>Minimum gains (%)</span>
+                      <div class="profile_form_select_fields">
+                        <input type="number" step='0.01' name="minimum_gains" value='{{ current_user.strategy.minimum_gains }}' placeholder='0.00' >
+                      </div>
+                    </div>
+                  </div>
+                  <div class="parent_custom_check_box_fields mb-5">
+                    <h3>Choose your cryptocurrencies</h3>
+                    <div class="custom_check_box_fields">
+                      {% for i in range(all_coins|length) %}
+                        {% if i != 0 and i % 5 == 0 %}
+                          </div>
+                        {% endif %}
+                        {% if i % 5 == 0 %}
+                          <div class="single_custom_check_box">
+                        {% endif %}
+                        <div class="signup_single_checkbox_field">
+                          <div class="signup_single_checkbox_content">
+                            <label class="signup_custom_checkbox_input">
+                              <input type="checkbox" name="coins[]" value="{{ all_coins[i] }}" {{ "checked" if (all_coins[i] in current_user.coins) }} />
+                              <span class="checked_input_style"><i class="fas fa-check"></i></span>
+                            </label>
+                          </div>
+                          <p class="checked_text_style">{{ all_coins[i] }}</p>
+                        </div>
+                      {% endfor %}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="profile_submit_btn">
+                <button><i class="fal fa-check-circle"></i><span>Sauvegarder ma stratégie</span></button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

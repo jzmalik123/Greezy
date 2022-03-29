@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+  {% include 'partial_templates/head.html' %}
+  <style>
+.profile_page_form_section{
+  display: block;
+  float: left;
+  width: 100%;
+  padding: 0px 40px 70px 40px;
+}
+.custom_container_two{
+  max-width: 630px;
+}
+.profile_form_data_section{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 50px 0px;
+}
+.profile_form_data_box{
+  display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 25px 0px;
+}
+.profile_form_data_box_heading h6{
+  font-style: normal;
+font-weight: 500;
+font-size: 20px;
+line-height: 30px;
+color: #489EB4;
+mix-blend-mode: normal;
+opacity: 0.9;
+text-shadow: 0px 4px 55px #489EB4;
+margin: 0px;
+}
+.profile_form_data_single_box{
+  display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 40px 0px;
+}
+.profile_form_data_inner_box{
+  width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    gap: 40px 15px;
+    grid-template-areas: ". .";
+}
+.profile_form_data_single_box_three{
+  display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 20px 0px;
+}
+
+.profile_form_data_box_docment{
+  display: flex;
+  flex-direction: column;
+  gap: 30px 0px;
+ width: 100%;
+}
+.profile_form_data_box_docment p{
+  font-style: normal;
+font-weight: 300;
+font-size: 14px;
+line-height: 16px;
+color: #F5F5FF;
+margin: 0px;
+}
+.profile_form_data_box_docment p span{
+color: #fff;
+font-weight: 800;
+}
+.profile_form_form_fields{
+  display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap:10px 0px;
+
+}
+.profile_form_form_fields span{
+  font-style: normal;
+font-weight: 300;
+font-size: 18px;
+line-height: 16px;
+color: #F5F5FF;
+}
+.profile_form_form_fields input{
+  background: radial-gradient(97.57% 210.75% at 0.9% 2.98%, rgba(22, 22, 22, 0.4) 0%, rgba(255, 255, 255, 0) 100%);
+backdrop-filter: blur(42px);
+border-radius: 5px;
+font-style: normal;
+font-weight: 500;
+font-size: 16px;
+line-height: 16px;
+display: flex;
+align-items: center;
+width: 100%;
+letter-spacing: -0.009em;
+color: #868691;
+height: 48px;
+padding: 0px 15px;
+border: 1px solid rgb(22, 22, 22);
+}
+.profile_form_form_fields input::placeholder{
+font-style: normal;
+font-weight: 500;
+font-size: 16px;
+letter-spacing: -0.009em;
+color: #868691;
+}
+.profile_form_ducument_input{
+width: 100%;
+display: flex;
+}
+.profile_form_ducument_input .file_input_label{
+  font-style: normal;
+font-weight: normal;
+font-size: 16px;
+line-height: 19px;
+display: flex;
+align-items: center;
+text-align: center;
+justify-content: center;
+color: #FFFFFF;
+width: 100%;
+border: 3px dashed #333;
+box-sizing: border-box;
+border-radius: 8px;
+height: 72px;
+position: relative;
+cursor: pointer;
+margin: 0px;
+}
+.profile_form_ducument_input .file_input_label a{
+
+  display: flex;
+  height: 100%;
+  align-items: center;
+  position: absolute;
+  top: 0px;
+  left: 10px;
+}
+.profile_form_ducument_input .file_input_label input[type="file"] {
+    display: none;
+}
+.profile_form_ducument_input .file_input_label a i{
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   filter: drop-shadow(0px -2px 13px rgba(72, 158, 180, 0.9));
+  height: 40px;
+   width: 40px;
+   font-size: 19px;
+   background-color: rgba(72, 158, 180, 0.7);
+  border-radius: 7px;
+  }
+.profile_submit_btn button{
+  background: linear-gradient(180deg, #FEA62A 0%, #B97D28 100%);
+border-radius: 8px;
+height: 56px;
+width: 260px;
+ display: flex;
+align-items: center;
+justify-content: center;
+gap: 0px 5px;
+border: unset !important;
+}
+
+.profile_submit_btn button i{
+  font-size: 16px;
+color: #ECE7E2;
+}
+.profile_submit_btn button span{
+  font-style: normal;
+font-weight: 600;
+font-size: 16px;
+line-height: 24px;
+color: #ECE7E2;
+}
+@media (max-width: 1024px){
+.profile_page_form_section {
+    padding: 0px 30px 70px 30px;
+}
+}
+@media (max-width: 540px){
+.contact_us_form_fields {
+    grid-template-columns: 1fr;
+    grid-template-areas: ".";
+}
+.profile_form_data_inner_box {
+    grid-template-columns: 1fr;
+    grid-template-areas: ".";
+}
+.profile_form_data_single_box_three {
+    gap: 40px 0px;
+}
+}
+
+
+</style>
+  <body>
+    {% include 'partial_templates/sidebar.html' %}
+    <div class="body_main">
+      {% include 'partial_templates/top_nav.html' %}
+      <div class="dashboard_header">
+        <div class="custom_container">
+          <div class="dashboard_title">
+             <div class="dashboard_welcome_text">
+               <h2>Profile</h2>
+               <p>Fill out this form to start using Greezy.</p>
+             </div>
+            <div class="dashboard_logo"><img src="{{ url_for('static', filename='images/logo.png') }}"></div>
+          </div>
+        </div>
+      </div>
+      <div class="profile_page_form_section">
+        <div class="custom_container_two">
+          {% include 'partial_templates/flash_messages.html' %}
+          <form method="POST" action="{{ url_for('profile') }}" id="quick_contact_new_recap" novalidate="novalidate" data-parsley-validate="" enctype="multipart/form-data">
+            <div class="profile_form_data_section">
+              <div class="profile_form_data_box">
+                <div class="profile_form_data_box_heading"><h6>About you</h6></div>
+                <div class="profile_form_data_single_box">
+                  <div class="profile_form_data_inner_box">
+                    <div class="profile_form_form_fields">
+                      <span>First name</span>
+                      <input type="text" placeholder="First Name" name="first_name" value="{{ current_user.first_name }}" data-parsley-required="true">
+                    </div>
+                    <div class="profile_form_form_fields">
+                      <span>Last name</span>
+                      <input type="text" placeholder="Last Name" name="last_name" value="{{ current_user.last_name }}" data-parsley-required="true" >
+                    </div>
+                  </div>
+                  <div class="profile_form_data_single_box_two">
+                    <div class="profile_form_form_fields">
+                      <span>Email</span>
+                      <input type="email" placeholder="exemple@adresse.com" name="email" value="{{ current_user.email }}" data-parsley-type="email" data-parsley-required="true">
+                    </div>
+                  </div>
+                  <div class="profile_form_data_single_box_two">
+                    <div class="profile_form_form_fields">
+                      <span>Phone</span>
+                      <input type="text" placeholder="+33 7 86 48 92 43" name="phone" value="{{ current_user.phone }}" data-parsley-required="true">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="profile_form_data_box">
+                <div class="profile_form_data_box_heading"><h6>Address</h6></div>
+                <div class="profile_form_data_single_box_three">
+                  <div class="profile_form_data_single_box_two">
+                    <div class="profile_form_form_fields">
+                      <span>Street address</span>
+                      <input type="address" placeholder="Street address" name="street_address" value="{{ current_user.street_address }}" data-parsley-required="true">
+                    </div>
+                  </div>
+                  <div class="profile_form_data_inner_box">
+                     <div class="profile_form_form_fields">
+                      <span>City</span>
+                      <input type="text" placeholder="City" name="city" value="{{ current_user.city }}">
+                    </div>
+                    <div class="profile_form_form_fields">
+                      <span>ZIP Code</span>
+                      <input type="text" placeholder="ZIP Code" name="zip_code" value="{{ current_user.zip_code }}" data-parsley-required="true">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="profile_form_data_box">
+                <div class="profile_form_data_box_heading"><h6>Your Crypto Account (Affiliation)</h6></div>
+                <div class="profile_form_data_single_box_three">
+                  <div class="profile_form_data_single_box_two">
+                    <div class="profile_form_form_fields">
+                      <span>Choose your Cryptocurrency</span>
+                      <input type="text" placeholder="Cryptocurrency" name="cryptocurrency" value="{{ current_user.cryptocurrency }}" data-parsley-required="true">
+                    </div>
+                  </div>
+
+                  <div class="profile_form_data_single_box_two">
+                    <div class="profile_form_form_fields">
+                      <span>Wallet</span>
+                      <input type="text" placeholder="example : 0X501906Ce564be7bA80Eb55A29EE31ECfaE41b6f2" name="wallet" value="{{ current_user.wallet }}" data-parsley-required="true">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {% if not current_user.kyc_verified %}
+              <div class="profile_form_data_box">
+                <div class="profile_form_data_box_heading"><h6>KYC</h6></div>
+                <div class="profile_form_data_box_docment">
+                  <p>The French government requires us to verify the personal information of all our users.
+                    Please attach a valid ID <span>(ID card, passport, NOT driver's license)</span>
+                    <span>Front and back</span> on the same document PDF
+                  </p>
+                  <div class="profile_form_ducument_input">
+                     <label class="file_input_label"><a><i class="fal fa-plus"></i></a>Add a file <input type="file" name="kyc"></label>
+                  </div>
+                </div>
+              </div>
+              {% endif %}
+              <div class="profile_submit_btn">
+                <button><i class="fal fa-check-circle"></i><span>Validate modifications</span></button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,9 @@
+# DATABASEIP = 'localhost'
+# DB_USER = 'root'
+# DB_PASSWORD = ''
+# DATABASE = 'web_project'
+#SECRET_KEY = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
+# UPLOAD_FOLDER_POST = './static/images/post/'
+# UPLOAD_FOLDER_STUDENT = './static/images/student/'
+# UPLOAD_FOLDER_TEACHER = './static/images/teacher/'
+# ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
