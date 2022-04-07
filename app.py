@@ -51,6 +51,21 @@ def cbProAuth(user):
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+
+def sessionExists():
+    return 'user_id' in session.keys() and session['user_id'] is not None
+
+
+def redirectIfSessionExists():
+    if sessionExists():
+        raise RequestRedirect(url_for('home'))
+
+
+def redirectIfSessionNotExists():
+    if not sessionExists():
+        flash("You must be logged in to access this page", "danger")
+        raise RequestRedirect(url_for('login'))
+
 ###### MODELS #################
 
 
@@ -126,6 +141,12 @@ class User(db.Model):
                 continue
         return total
 
+    def credentialsExist(self):
+        key_present = self.cb_credentials.cb_key is not None
+        secret_present = self.cb_credentials.cb_secret is not None
+        password_present = self.cb_credentials.cb_password is not None
+        return key_present and secret_present and password_present
+
 
 class CBCredentials(db.Model):
     id = db.Column('id', db.Integer, primary_key=True)
@@ -143,21 +164,6 @@ class Strategy(db.Model):
     audacity = db.Column('audacity', db.Integer, default=1)
     minimum_gains = db.Column('minimum_gains', db.Float, default=0.0)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-
-
-def sessionExists():
-    return 'user_id' in session.keys() and session['user_id'] is not None
-
-
-def redirectIfSessionExists():
-    if sessionExists():
-        raise RequestRedirect(url_for('home'))
-
-
-def redirectIfSessionNotExists():
-    if not sessionExists():
-        flash("You must be logged in to access this page", "danger")
-        raise RequestRedirect(url_for('login'))
 
 
 @app.route('/')
@@ -208,14 +214,19 @@ def signup():
 def home():
     redirectIfSessionNotExists()
     current_user = User.query.filter_by(id=session['user_id']).first()
-    fiatBalance = round(current_user.getFiatBalance())
     fiatSymbol = current_user.getFiatSymbol()
-    coins_hash = current_user.getCoinsData()
-    chartData = [{"x": coin["currency"], "value": float(coin['balance'])} for coin in coins_hash if
-                 coin['currency'] in current_user.coins]
+    profit = round(current_user.profit) if current_user.profit else '-'
+    if current_user.credentialsExist():
+        fiatBalance = round(current_user.getFiatBalance())
+        coins_hash = current_user.getCoinsData()
+        chartData = [{"x": coin["currency"], "value": float(coin['balance'])} for coin in coins_hash if
+                     coin['currency'] in current_user.coins]
+    else:
+        fiatBalance = '-'
+        chartData = [{"x": "Your coins will appear here", "value": 1}]
 
     return render_template('home.html', pageTitle='Home', cssFile='dashboard', current_user=current_user,
-                           fiatBalance=fiatBalance, chartData=json.dumps(chartData), fiatSymbol=fiatSymbol)
+                           fiatBalance=fiatBalance, chartData=json.dumps(chartData), fiatSymbol=fiatSymbol, profit=profit)
 
 
 @app.route('/logout')
@@ -278,6 +289,7 @@ def connect_greezy():
 def strategy():
     redirectIfSessionNotExists()
     current_user = User.query.filter_by(id=session['user_id']).first()
+    user_coins = current_user.coins if current_user.coins else []
     if request.method == 'POST':
         current_user.strategy.currency_id = request.form['currency_id']
         current_user.strategy.aggressiveness = request.form['aggressiveness']
@@ -291,7 +303,7 @@ def strategy():
         except:
             flash("Error in updating Strategy", "danger")
     return render_template('strategy.html', cssFile="dashboard", current_user=current_user, pageTitle="Strategy",
-                           all_coins=all_coins)
+                           all_coins=all_coins, user_coins=user_coins)
 
 
 @app.route('/affiliation', methods=['GET', 'POST'])
