@@ -601,7 +601,7 @@ color: #F5F5FF;
                         <div class="signup_single_checkbox_field">
                           <div class="signup_single_checkbox_content">
                             <label class="signup_custom_checkbox_input">
-                              <input type="checkbox" name="coins[]" value="{{ all_coins[i] }}" {{ "checked" if (all_coins[i] in current_user.coins) }} />
+                              <input type="checkbox" name="coins[]" value="{{ all_coins[i] }}" {{ "checked" if (all_coins[i] in user_coins) }} />
                               <span class="checked_input_style"><i class="fas fa-check"></i></span>
                             </label>
                           </div>
