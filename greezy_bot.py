@@ -58,6 +58,8 @@ all_users = User.query.all()
 
 for user in all_users:
     try:
+        if not user.credentialsExist():
+            continue
         auth = cbProAuth(user)
         cash = user.getFiatBalance()
         startingValue = user.getTotals()
