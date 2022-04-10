@@ -111,8 +111,12 @@ class User(db.Model):
     def getFiatBalance(self):
         auth = cbProAuth(self)
         fiatName = self.getFiatName()
-        i = float(auth.get_account(self.getAccountID(fiatName))['available'])
-        return i
+        fiatAccount = self.getAccountID(fiatName)
+        if fiatAccount is None:
+            flash("Fiat Mismatch, Please select correct fiat from strategy", "danger")
+            return 0
+        else:
+            return float(auth.get_account(fiatAccount)['available'])
 
     def getCoinsData(self):
         auth = cbProAuth(self)
