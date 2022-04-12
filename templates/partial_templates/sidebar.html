@@ -11,44 +11,44 @@
     </div>
   </div>
 
-
+  {% set selected_menu = request.path.lstrip('/') %}
   <div class="sidebar_menu_list">
-    <div class="sidebar_menu_list_items dashboard active">
+    <div class="sidebar_menu_list_items dashboard {{ 'active' if selected_menu == 'home' }}">
       <img src="{{ url_for('static', filename='images/dashboard_icon.svg') }}">
       <a href="{{ url_for('home') }}"><span>Dashboard</span></a>
     </div>
 
-    <div class="sidebar_menu_list_items profile">
+    <div class="sidebar_menu_list_items profile {{ 'active' if selected_menu == 'profile' }}">
       <i class="fal fa-user"></i>
       <a href="{{ url_for('profile') }}"><span>Profile</span></a>
     </div>
 
-    <div class="sidebar_menu_list_items connect_greezy">
+    <div class="sidebar_menu_list_items connect_greezy {{ 'active' if selected_menu == 'connect_greezy' }}">
       <img src="{{ url_for('static', filename='images/connect.svg') }}">
       <a href="{{ url_for('connect_greezy') }}"><span>Connect Greezy</span></a>
     </div>
 
-    <div class="sidebar_menu_list_items strategy">
+    <div class="sidebar_menu_list_items strategy {{ 'active' if selected_menu == 'strategy' }}">
       <img src="{{ url_for('static', filename='images/event.svg') }}">
       <a href="{{ url_for('strategy') }}"><span>Strategy</span></a>
     </div>
 
-    <div class="sidebar_menu_list_items affiliation">
+    <div class="sidebar_menu_list_items affiliation {{ 'active' if selected_menu == 'affiliation' }}">
       <i class="fal fa-share-alt"></i>
       <a href="{{ url_for('affiliation') }}"><span>Affiliation</span></a>
     </div>
 
-    <div class="sidebar_menu_list_items telegram">
+    <div class="sidebar_menu_list_items telegram {{ 'active' if selected_menu == 'telegram' }}">
       <i class="fab fa-telegram-plane"></i>
       <span>Telegram</span>
     </div>
 
-    <div class="sidebar_menu_list_items website">
+    <div class="sidebar_menu_list_items website {{ 'active' if selected_menu == 'website' }}">
       <img src="{{ url_for('static', filename='images/website.svg') }}">
       <span>Website</span>
     </div>
 
-    <div class="sidebar_menu_list_items support">
+    <div class="sidebar_menu_list_items support {{ 'active' if selected_menu == 'support' }}">
       <i class="far fa-question-circle"></i>
       <a href="{{ url_for('support') }}"><span>Support</span></a>
     </div>
