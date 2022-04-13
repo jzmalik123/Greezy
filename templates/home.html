@@ -278,14 +278,16 @@ color: #868691;
     // create the chart
     var chart = anychart.pie();
 
+    // set chart title
+    chart.title("Cryptocurrencies");
 
     // add the data
     chart.data(data);
 
     // set legend position
     chart.legend().position("right");
-    // set items layout
-    chart.legend().itemsLayout("horizontal");
+    chart.legend().itemsLayout("horizontal-expandable");
+    chart.legend().maxWidth("40%");
 
     // display the chart in the container
     chart.container('own_container');
