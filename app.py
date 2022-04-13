@@ -8,6 +8,7 @@ import time
 import cbpro
 import json
 from flask_mail import Mail, Message
+import uuid
 
 from werkzeug.utils import secure_filename
 
@@ -22,7 +23,7 @@ app.config['UPLOAD_FOLDER'] = 'uploads/kyc'
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
 app.config['MAIL_USERNAME'] = 'jzmalik123@gmail.com'
-app.config['MAIL_PASSWORD'] = '**********'
+app.config['MAIL_PASSWORD'] = 'personee5'
 app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
 
@@ -85,6 +86,7 @@ class User(db.Model):
     coins = db.Column(db.JSON)
     kyc_verified = db.Column(db.Boolean, default=False)
     profit = db.Column('profit', db.Float, default=0.0)
+    password_reset_hash = db.Column(db.String(255))
     cb_credentials = db.relationship("CBCredentials", backref="user", uselist=False)
     strategy = db.relationship('Strategy', backref='user', uselist=False)
 
@@ -151,6 +153,22 @@ class User(db.Model):
         password_present = self.cb_credentials.cb_password is not None
         return key_present and secret_present and password_present
 
+    def send_password_reset_email(self):
+        subject = 'Password Reset Link for Greezy.tech'
+        password_reset_hash = uuid.uuid4().hex
+        message = f'Please use following link to reset your password:\n {request.base_url + "/" + password_reset_hash}'
+        msg = Message(subject, sender=SUPPORT_EMAIL, recipients=[self.email])
+        msg.body = message
+        try:
+            mail.send(msg)
+            self.password_reset_hash = password_reset_hash
+            db.session.add(self)
+            db.session.commit()
+            return True
+        except Exception as e:
+            print(e)
+            return False
+
 
 class CBCredentials(db.Model):
     id = db.Column('id', db.Integer, primary_key=True)
@@ -212,6 +230,40 @@ def signup():
             flash("User registered successfully", "success")
             return redirect(url_for('login'))
     return render_template('signup.html', pageTitle='Signup', cssFile='login')
+
+
+@app.route('/forgot_password', methods=['GET', 'POST'])
+def forgot_password():
+    redirectIfSessionExists()
+    if request.method == 'POST':
+        email = request.form['email']
+        user = User.query.filter_by(email=email).first()
+        if user is None:
+            flash("Invalid email, Please enter again", "danger")
+        else:
+            if user.send_password_reset_email():
+                flash("Please check your email for password reset link", "success")
+            else:
+                flash("Please try again later", "danger")
+    return render_template('forgot_password.html', pageTitle='Forgot Password', cssFile='login')
+
+
+@app.route('/forgot_password/<password_reset_hash>', methods=['GET', 'POST'])
+def reset_password(password_reset_hash):
+    redirectIfSessionExists()
+    if request.method == 'POST':
+        password = request.form['password']
+        user = User.query.filter_by(password_reset_hash=password_reset_hash).first()
+        if user is None:
+            flash("Invalid Link, Please try again", "danger")
+        else:
+            user.password = password
+            user.password_reset_hash = None
+            db.session.add(user)
+            db.session.commit()
+            flash("Password reset successful, Please login to continue", "success")
+            return redirect(url_for('login'))
+    return render_template('reset_password.html', pageTitle='Reset Password', cssFile='login')
 
 
 @app.route('/home')
