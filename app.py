@@ -104,11 +104,26 @@ class User(db.Model):
         currency_id = self.strategy.currency_id
         return "$" if currency_id == 1 else '£'
 
+    def validCBCredentials(self):
+        auth = cbProAuth(self)
+        accounts = auth.get_accounts()
+        return type(accounts) == list
+
+    def getCredentialsErrorMessage(self):
+        auth = cbProAuth(self)
+        accounts = auth.get_accounts()
+        return accounts['message']
+
     def getAccountID(self, fiatName):
         auth = cbProAuth(self)
-        for account in auth.get_accounts():
-            if account['currency'] == fiatName:
-                return account['id']
+        accounts = auth.get_accounts()
+        if type(accounts) is dict:
+            flash(accounts['message'], 'danger')
+            return None
+        else:
+            for account in accounts:
+                if account['currency'] == fiatName:
+                    return account['id']
 
     def getFiatBalance(self):
         auth = cbProAuth(self)
@@ -272,12 +287,14 @@ def home():
     current_user = User.query.filter_by(id=session['user_id']).first()
     fiatSymbol = current_user.getFiatSymbol()
     profit = round(current_user.profit) if current_user.profit else '-'
-    if current_user.credentialsExist():
+    if current_user.credentialsExist() and current_user.validCBCredentials():
         fiatBalance = round(current_user.getFiatBalance())
         coins_hash = current_user.getCoinsData()
         chartData = [{"x": coin["currency"], "value": float(coin['balance'])} for coin in coins_hash if
                      coin['currency'] in current_user.coins]
     else:
+        if not current_user.validCBCredentials():
+            flash(current_user.getCredentialsErrorMessage() + ' in Coinbase Credentials', 'danger')
         fiatBalance = '-'
         chartData = [{"x": "Your coins will appear here", "value": 1}]
 
