@@ -1,9 +1,12 @@
 import datetime as dt
+import logging
 import time
+from datetime import datetime
 import cbpro
 
 from theDic import decisions, prediction
 from app import app, db, User, Strategy, cbProAuth, CBCredentials
+logging.basicConfig(filename="Greezy_Bot.log", level=logging.INFO)
 
 ################USER SETTINGS########################################
 
@@ -50,15 +53,18 @@ def messages(i):
     return data
 
 
-print(messages(i='introduction'))
+logging.info(messages(i='introduction'))
 
 iteration, buyCount, sellCount, stopCount, reupCount = [0, 0, 0, 0, 0]
 
 all_users = User.query.all()
 
+logging.info("\n\n Running Greezy Bot AT: " + datetime.now().strftime('%d-%m-%Y %H:%M:%S') + "\n\n")
 for user in all_users:
     try:
-        if not user.credentialsExist():
+        logging.info("Running Bot For User: " + user.email)
+        if not user.credentialsExist() or not user.validCBCredentials():
+            logging.error("Invalid credentials")
             continue
         auth = cbProAuth(user)
         cash = user.getFiatBalance()
@@ -72,14 +78,16 @@ for user in all_users:
         desiredGain = 1+(user.strategy.minimum_gains / float(100.00)) # this is the minimum gain before considering a sell. 1.00 = 0%, gain 1.02 = 2% gain, 1.33 = 33% gain
         desiredBuy = desiredGain - 1  # this is the minimum price percentage decrease before considering a buy 0.15 = 15%
         stopLoss = None  # left for now but use => user.strategy.stop_loss
-        print('\n', margin, margin, 'startingPortfolio Value:', startingValue, '\n', margin, margin, fiat, 'balance:', cash)
+       # logging.info('\n', margin, margin, 'startingPortfolio Value:', startingValue, '\n', margin, margin, fiat, 'balance:', cash)
 
         for coin in coins:
             try:
                 currency = str(coin + '-' + fiat)
                 specificID = user.getAccountID(currency[:3])
-                # print('\n', '------<', coin, '>-----')
+                logging.info('\n' + '------<' + coin + '>-----')
                 owned = float(auth.get_account(specificID)['available'])
+                logging.info(currency)
+                logging.info(auth.get_product_ticker(product_id=(currency)))
                 price = float(auth.get_product_ticker(product_id=(currency))['price'])
                 value = owned * price
 
@@ -88,10 +96,10 @@ for user in all_users:
 
                 virgin = (fills == [])
                 if virgin:
-                    print('buying', currency, 'for the first time...')
+                    logging.info('buying' + currency + 'for the first time...')
                     receipt = auth.place_market_order(product_id=str(currency), side='buy', funds=str(funding))
                     buyCount = buyCount + 1
-                    print('Trade Receipt:', receipt)
+                    logging.info('Trade Receipt:' + str(receipt))
                     time.sleep(3)
                     fills = list(auth.get_fills(currency))
 
@@ -99,10 +107,10 @@ for user in all_users:
                 fillPrice = float(fill['price'])
                 lastSide = (fill['side'])
 
-                print('\n', margin, 'lastTrade:', lastSide, '@', fillPrice, fiat,
-                      '\n', margin, '  currentPrice:', price,
-                      '\n', margin, '   owned:', owned,
-                      '\n', margin, '    value:', value)
+                # logging.info('\n', margin, 'lastTrade:', lastSide, '@', fillPrice, fiat,
+                #       '\n', margin, '  currentPrice:', price,
+                #       '\n', margin, '   owned:', owned,
+                #       '\n', margin, '    value:', value)
 
                 estimatedGain = round(owned * price - owned * fillPrice, 4)
 
@@ -114,24 +122,24 @@ for user in all_users:
                     # print(margin, '      targetPrice', targetPrice, fiat)
                     if price < targetPrice:
                         signal = prediction.coppockCurve(currency, auth)
-                        print(margin, ' signal:', signal)
+                        logging.info(margin + ' signal:' + str(signal))
                         if signal:
                             if funding < availableFunds:
-                                print(currency)
+                                logging.info(currency)
                                 placeBuyOrder = auth.place_market_order(product_id=currency, side='buy', funds=funding)
                                 buyReceipt = placeBuyOrder
-                                print(buyReceipt)
+                                logging.info(buyReceipt)
                 elif lastSide == 'buy':
                     targetPrice = (fillPrice * desiredGain)
                     theDifference = targetPrice - fillPrice
                     if price > targetPrice:
                         signal = prediction.coppockCurve(currency, auth)
-                        print(margin, margin, 'signal:', signal)
+                        #logging.info(margin, margin, 'signal:', signal)
                         if signal:
                             placeMarketSellOrder = auth.place_market_order(product_id=str(currency), side='sell',
                                                                            size=str(size))
                             tradeReceipt = placeMarketSellOrder
-                            print(tradeReceipt)
+                            logging.info(str(tradeReceipt))
                 if coin == coins[-1]:
                     portfolioValue = float(user.getTotals())
                     sessionEarnings = portfolioValue - float(startingValue)
@@ -139,12 +147,12 @@ for user in all_users:
                     db.session.add(user)
                     db.session.commit()
                     iteration = iteration + 1
-                    print('\n', '      starting portfolio value: ', startingValue, '\n', '      current portfolio value:',
-                          portfolioValue, '\n', '      total session earnings:', sessionEarnings)
+                    # logging.info('\n', '      starting portfolio value: ', startingValue, '\n', '      current portfolio value:',
+                    #       portfolioValue, '\n', '      total session earnings:', sessionEarnings)
                     time.sleep(3)
             except Exception as e:
-                print('Error! In Bot:', e)
+                print('Error! In Bot:' + str(e))
                 continue
     except Exception as e:
-        print("Error", e)
+        logging.error("Error" + str(e))
         continue
