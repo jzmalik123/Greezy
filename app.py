@@ -293,7 +293,7 @@ def home():
         chartData = [{"x": coin["currency"], "value": float(coin['balance'])} for coin in coins_hash if
                      coin['currency'] in current_user.coins]
     else:
-        if not current_user.validCBCredentials():
+        if current_user.credentialsExist() and not current_user.validCBCredentials():
             flash(current_user.getCredentialsErrorMessage() + ' in Coinbase Credentials', 'danger')
         fiatBalance = '-'
         chartData = [{"x": "Your coins will appear here", "value": 1}]
