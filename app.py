@@ -290,6 +290,8 @@ def home():
     if current_user.credentialsExist() and current_user.validCBCredentials():
         fiatBalance = round(current_user.getFiatBalance())
         coins_hash = current_user.getCoinsData()
+        if current_user.coins is None:
+            current_user.coins = []
         chartData = [{"x": coin["currency"], "value": float(coin['balance'])} for coin in coins_hash if
                      coin['currency'] in current_user.coins]
     else:
