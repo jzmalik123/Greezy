@@ -292,6 +292,8 @@ def home():
         coins_hash = current_user.getCoinsData()
         if current_user.coins is None:
             current_user.coins = []
+            db.session.add(current_user)
+            db.session.commit()
         chartData = [{"x": coin["currency"], "value": float(coin['balance'])} for coin in coins_hash if
                      coin['currency'] in current_user.coins]
     else:
